@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jocelyn Ramalalatiana — Développeur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12100E;
+    --bg-raised: #1B1712;
+    --line: #2E2820;
+    --ink: #F2EDE4;
+    --ink-dim: #B8AF9F;
+    --ochre: #E8A33D;
+    --ochre-dim: #7A5A28;
+    --green: #46705F;
+    --green-dim: #2A4038;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  ::selection{ background: var(--ochre); color: var(--bg); }
+
+  a{ color: inherit; }
+
+  .display{
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+  }
+
+  /* subtle grain / topo texture */
+  body::before{
+    content:"";
+    position: fixed; inset:0;
+    pointer-events:none;
+    z-index: 1;
+    opacity: 0.035;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 2px, #fff 2px, #fff 3px);
+    mix-blend-mode: overlay;
+  }
+
+  .wrap{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(18,16,14,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height: 64px;
+    font-size: 13px;
+  }
+  .nav-brand{
+    color: var(--ochre);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .nav-links{ display:flex; gap: 28px; list-style:none; }
+  .nav-links a{
+    text-decoration:none;
+    color: var(--ink-dim);
+    position: relative;
+    padding: 4px 0;
+    transition: color 0.2s ease;
+  }
+  .nav-links a::before{ content: "· "; color: var(--green); }
+  .nav-links a:hover{ color: var(--ink); }
+  .nav-status{
+    display:flex; align-items:center; gap:8px;
+    color: var(--ink-dim);
+  }
+  .dot{
+    width:7px; height:7px; border-radius:50%;
+    background: var(--green);
+    box-shadow: 0 0 0 0 rgba(70,112,95,0.6);
+    animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse{
+    0%{ box-shadow: 0 0 0 0 rgba(70,112,95,0.5); }
+    70%{ box-shadow: 0 0 0 7px rgba(70,112,95,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(70,112,95,0); }
+  }
+
+  @media (max-width: 720px){
+    .nav-links{ display:none; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    padding: 110px 0 90px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-eyebrow{
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .hero-eyebrow .rule{ width:32px; height:1px; background: var(--green-dim); }
+
+  .hero-name{
+    font-family:'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(52px, 9vw, 108px);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .hero-name em{
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ochre);
+  }
+
+  .hero-grid{
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.75fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  @media (max-width: 1040px){
+    .hero-grid{ grid-template-columns: 1fr 1fr; }
+    .hero-photo{ order: -1; }
+  }
+  @media (max-width: 640px){
+    .hero-grid{ grid-template-columns: 1fr; }
+  }
+
+  .hero-photo{
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--bg-raised);
+  }
+  .hero-photo img{
+    display:block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 4 / 5;
+    filter: grayscale(65%) contrast(1.05) brightness(0.95);
+    transition: filter 0.5s ease;
+  }
+  .hero-photo:hover img{ filter: grayscale(0%) contrast(1.02) brightness(1); }
+  .hero-photo::after{
+    content:"";
+    position:absolute; inset:0;
+    box-shadow: inset 0 0 0 1px rgba(232,163,61,0.0);
+    border-bottom: 3px solid var(--ochre);
+    pointer-events:none;
+  }
+  .hero-photo-cap{
+    position:absolute; left:0; right:0; bottom:0;
+    padding: 10px 14px;
+    background: linear-gradient(180deg, transparent, rgba(18,16,14,0.92) 60%);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+    display:flex; justify-content: space-between;
+  }
+  .hero-photo-cap span:last-child{ color: var(--ochre); }
+
+  .hero-lede{
+    font-size: 17px;
+    color: var(--ink-dim);
+    max-width: 46ch;
+    line-height: 1.75;
+  }
+  .hero-lede strong{ color: var(--ink); font-weight: 500; }
+
+  .hero-cta{
+    margin-top: 28px;
+    display:flex; gap: 14px; flex-wrap: wrap;
+  }
+  .btn{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    padding: 12px 20px;
+    border-radius: 3px;
+    text-decoration: none;
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    border: 1px solid var(--line);
+    transition: all 0.2s ease;
+  }
+  .btn-primary{
+    background: var(--ochre);
+    color: #1B1400;
+    border-color: var(--ochre);
+    font-weight: 600;
+  }
+  .btn-primary:hover{ background: #f2b352; transform: translateY(-1px); }
+  .btn-ghost{ color: var(--ink-dim); }
+  .btn-ghost:hover{ color: var(--ink); border-color: var(--ink-dim); }
+
+  /* README card */
+  .readme{
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .readme-bar{
+    display:flex; align-items:center; gap:8px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--line);
+    background: #171310;
+  }
+  .readme-bar span{
+    width:9px; height:9px; border-radius:50%;
+    background: var(--line);
+  }
+  .readme-bar .fname{
+    margin-left: 8px;
+    font-size: 12px;
+    color: var(--ink-dim);
+  }
+  .readme-body{ padding: 20px 18px; font-size: 13px; }
+  .readme-body .k{ color: var(--green); }
+  .readme-body .s{ color: var(--ochre); }
+  .readme-body .c{ color: var(--ink-dim); font-style: italic; }
+  .readme-body pre{ white-space: pre-wrap; line-height: 1.9; }
+
+  /* ---------- SECTION SCAFFOLDING ---------- */
+  section{ padding: 88px 0; border-bottom: 1px solid var(--line); }
+  .section-head{
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .section-tag{
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  .section-title{
+    font-family:'Fraunces', serif;
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 600;
+    margin-top: 10px;
+  }
+  .section-note{
+    font-size: 13px;
+    color: var(--ink-dim);
+    max-width: 32ch;
+    text-align: right;
+  }
+  @media (max-width: 720px){
+    .section-note{ text-align:left; }
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  @media (max-width: 780px){ .skills-grid{ grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px){ .skills-grid{ grid-template-columns: 1fr; } }
+
+  .skill-cell{
+    background: var(--bg);
+    padding: 26px 22px;
+  }
+  .skill-cell h3{
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ochre);
+    margin-bottom: 14px;
+  }
+  .skill-cell ul{ list-style:none; font-size: 14px; }
+  .skill-cell li{
+    padding: 4px 0;
+    color: var(--ink-dim);
+    border-bottom: 1px dashed transparent;
+  }
+  .skill-cell li::before{ content:"— "; color: var(--green); }
+
+  /* ---------- PROJECTS (signature: compile cards) ---------- */
+  .projects{ display:flex; flex-direction: column; gap: 22px; }
+
+  .proj-card{
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 0;
+    overflow: hidden;
+    transition: border-color 0.25s ease;
+  }
+  .proj-card:hover{ border-color: var(--ochre-dim); }
+
+  .proj-top{
+    display:flex; justify-content: space-between; align-items:center;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .proj-name{
+    font-family:'Fraunces', serif;
+    font-size: 21px;
+    font-weight: 600;
+  }
+  .proj-status{
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 3px;
+    background: var(--green-dim);
+    color: #BFE0D2;
+    white-space: nowrap;
+  }
+  .proj-status.freelance{ background: var(--ochre-dim); color: #FBD693; }
+
+  .proj-body{ padding: 20px 22px 24px; }
+  .proj-desc{ font-size: 14px; color: var(--ink-dim); max-width: 70ch; margin-bottom: 16px; }
+
+  .proj-stack{ display:flex; flex-wrap: wrap; gap: 8px; }
+  .tag{
+    font-size: 11.5px;
+    padding: 4px 9px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    color: var(--ink-dim);
+  }
+  .tag::before{ content:"import "; color: var(--green); opacity: 0.8; }
+
+  /* ---------- EXPERIENCE ---------- */
+  .timeline{ position: relative; padding-left: 28px; }
+  .timeline::before{
+    content:"";
+    position:absolute; left:5px; top:6px; bottom:6px;
+    width:1px;
+    background: var(--line);
+  }
+  .tl-item{ position: relative; padding-bottom: 40px; }
+  .tl-item:last-child{ padding-bottom: 0; }
+  .tl-item::before{
+    content:"";
+    position:absolute; left:-28px; top:6px;
+    width:11px; height:11px; border-radius:50%;
+    background: var(--bg);
+    border: 2px solid var(--ochre);
+  }
+  .tl-date{ font-size: 12px; color: var(--green); margin-bottom: 6px; }
+  .tl-role{ font-family:'Fraunces', serif; font-size: 22px; font-weight: 600; }
+  .tl-org{ color: var(--ink-dim); font-size: 14px; margin-bottom: 12px; }
+  .tl-list{ list-style:none; font-size: 14px; color: var(--ink-dim); max-width: 62ch; }
+  .tl-list li{ padding: 3px 0; }
+  .tl-list li::before{ content:"▸ "; color: var(--ochre); }
+
+  /* ---------- LANGUES / QUALITES ---------- */
+  .duo{ display:grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  @media (max-width: 720px){ .duo{ grid-template-columns: 1fr; gap: 40px; } }
+  .duo h3{
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ochre); margin-bottom: 20px;
+  }
+  .lang-row{ display:flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .lang-row span:last-child{ color: var(--ink-dim); }
+  .qual-list{ list-style:none; }
+  .qual-list li{ padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--ink-dim); }
+  .qual-list li::before{ content:"◆ "; color: var(--green); }
+
+  /* ---------- FOOTER / CONTACT ---------- */
+  footer{ padding: 90px 0 60px; }
+  .contact-title{
+    font-family:'Fraunces', serif;
+    font-size: clamp(34px, 6vw, 64px);
+    font-weight: 600;
+    max-width: 14ch;
+    line-height: 1.05;
+  }
+  .contact-title em{ font-style: italic; color: var(--ochre); }
+  .contact-grid{
+    margin-top: 44px;
+    display:flex; flex-wrap: wrap; gap: 14px;
+  }
+  .contact-item{
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px 20px;
+    font-size: 13.5px;
+    display:flex; align-items:center; gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .contact-item:hover{ border-color: var(--ochre); background: var(--bg-raised); }
+  .contact-item .label{ color: var(--ink-dim); }
+  .foot-bottom{
+    margin-top: 70px;
+    display:flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 12px; color: var(--ink-dim);
+  }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--ochre);
+    outline-offset: 3px;
+  }
+
+  .reveal{
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-brand">JR<span style="color:var(--ink)">.dev</span></div>
+    <ul class="nav-links">
+      <li><a href="#profil">profil</a></li>
+      <li><a href="#projets">projets</a></li>
+      <li><a href="#experience">expérience</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+    <div class="nav-status"><span class="dot"></span> disponible pour un stage</div>
+  </div>
+</nav>
+
+<header class="hero" id="profil">
+  <div class="wrap">
+    <div class="hero-eyebrow"><span class="rule"></span> Fianarantsoa, Madagascar</div>
+    <h1 class="hero-name">Ramalalatiana<br><em>Jocelyn</em></h1>
+
+    <div class="hero-grid">
+      <div>
+        <p class="hero-lede">
+          Étudiant en 3<sup>e</sup> année de <strong>Licence DAII</strong> à l'EMIT, je construis des applications
+          web et mobiles de bout en bout — du moteur de détection de conflits au back-office
+          de réservation. <strong>Java, React, Flutter, Node.js, PostgreSQL.</strong>
+          Je cherche un stage pour continuer à apprendre en construisant.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="mailto:jocelynramalalatiana@gmail.com">écrire un e-mail</a>
+          <a class="btn btn-ghost" href="https://linkedin.com/in/jocelyn-ramalalatiana-30b138300" target="_blank" rel="noopener">voir le LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="hero-photo">
+        <img src="assets/jocelyn-portrait.jpg" alt="Portrait de Jocelyn Ramalalatiana">
+        <div class="hero-photo-cap"><span>Fianarantsoa</span><span>2026</span></div>
+      </div>
+
+      <div class="readme">
+        <div class="readme-bar">
+          <span></span><span></span><span></span>
+          <span class="fname">profil.json</span>
+        </div>
+        <div class="readme-body">
+<pre>{
+  <span class="k">"formation"</span>: <span class="s">"Licence DAII, EMIT"</span>,
+  <span class="k">"annee"</span>: <span class="s">"2023 – 2026"</span>,
+  <span class="k">"langues"</span>: [<span class="s">"mg"</span>, <span class="s">"fr"</span>, <span class="s">"en"</span>],
+  <span class="k">"stack"</span>: [
+    <span class="s">"Java"</span>, <span class="s">"React"</span>,
+    <span class="s">"Flutter"</span>, <span class="s">"Node.js"</span>,
+    <span class="s">"ASP.NET Core"</span>
+  ],
+  <span class="k">"status"</span>: <span class="s">"open_to_internship"</span> <span class="c">// 2026</span>
+}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-tag">Boîte à outils</div>
+        <h2 class="section-title">Compétences</h2>
+      </div>
+      <p class="section-note">Ce que j'utilise selon le besoin — pas d'attachement religieux à un langage.</p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-cell">
+        <h3>Langages</h3>
+        <ul>
+          <li>Java · C# · C/C++</li>
+          <li>JavaScript · Dart</li>
+          <li>PHP · Python (notions)</li>
+        </ul>
+      </div>
+      <div class="skill-cell">
+        <h3>Frameworks & Runtimes</h3>
+        <ul>
+          <li>React · Flutter</li>
+          <li>Node.js · Express</li>
+          <li>ASP.NET · Windows Forms</li>
+        </ul>
+      </div>
+      <div class="skill-cell">
+        <h3>Données</h3>
+        <ul>
+          <li>MySQL · PostgreSQL</li>
+          <li>SQL</li>
+          <li>Entity Framework Core</li>
+        </ul>
+      </div>
+      <div class="skill-cell">
+        <h3>Outils</h3>
+        <ul>
+          <li>Git / GitHub</li>
+          <li>VS Code · NetBeans</li>
+          <li>Arduino / Wokwi</li>
+        </ul>
+      </div>
+      <div class="skill-cell">
+        <h3>Langues</h3>
+        <ul>
+          <li>Malgache — maternelle</li>
+          <li>Français — courant</li>
+          <li>Anglais — intermédiaire</li>
+        </ul>
+      </div>
+      <div class="skill-cell">
+        <h3>Qualités</h3>
+        <ul>
+          <li>Autonomie & rigueur</li>
+          <li>Esprit d'équipe</li>
+          <li>Curiosité & veille technique</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projets">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-tag">Build log</div>
+        <h2 class="section-title">Projets académiques</h2>
+      </div>
+      <p class="section-note">Quatre projets, quatre stacks différentes — choisies pour le problème, pas par habitude.</p>
+    </div>
+
+    <div class="projects">
+
+      <div class="proj-card">
+        <div class="proj-top">
+          <div class="proj-name">BibliOTech</div>
+          <div class="proj-status">BUILD: OK</div>
+        </div>
+        <div class="proj-body">
+          <p class="proj-desc">Application mobile multiplateforme (Android/iOS) de gestion de bibliothèque universitaire, avec authentification et API REST sécurisée.</p>
+          <div class="proj-stack">
+            <span class="tag">Flutter</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">REST API</span>
+            <span class="tag">JWT</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-top">
+          <div class="proj-name">GEDT-EMIT</div>
+          <div class="proj-status">BUILD: OK</div>
+        </div>
+        <div class="proj-body">
+          <p class="proj-desc">Application web full-stack pour automatiser la planification académique de l'EMIT. Cœur du projet : un moteur de détection de conflits qui bloque en temps réel toute collision de salle, d'enseignant ou de groupe avant l'enregistrement. <span style="color:var(--ink-dim)">— 2024–2025</span></p>
+          <div class="proj-stack">
+            <span class="tag">ASP.NET Core 8</span>
+            <span class="tag">C#</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Entity Framework Core 8</span>
+            <span class="tag">JWT</span>
+            <span class="tag">HTML/JS</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-top">
+          <div class="proj-name">Contrôle d'accès RFID</div>
+          <div class="proj-status">BUILD: OK</div>
+        </div>
+        <div class="proj-body">
+          <p class="proj-desc">Système de contrôle d'accès par badge RFID, code embarqué en C++ sur Arduino, simulé et validé sur Wokwi.</p>
+          <div class="proj-stack">
+            <span class="tag">C++</span>
+            <span class="tag">Arduino</span>
+            <span class="tag">Wokwi</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-top">
+          <div class="proj-name">TravelApp</div>
+          <div class="proj-status">BUILD: OK</div>
+        </div>
+        <div class="proj-body">
+          <p class="proj-desc">Application web de gestion d'agence de voyage : back-office administrateur et site client public avec réservation et paiement en ligne.</p>
+          <div class="proj-stack">
+            <span class="tag">Spring Boot</span>
+            <span class="tag">Java</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-tag">Parcours</div>
+        <h2 class="section-title">Expérience</h2>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">2025 — présent</div>
+        <div class="tl-role">Développeur freelance</div>
+        <div class="tl-org">Projets indépendants</div>
+        <ul class="tl-list">
+          <li>Développement d'applications web et mobiles sur demande</li>
+          <li>Conception et mise en ligne de sites vitrines pour de petites structures</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025</div>
+        <div class="tl-role">Stagiaire développeur</div>
+        <div class="tl-org">Oratoire Don Bosco</div>
+        <ul class="tl-list">
+          <li>Développement, maintenance et support technique d'applications internes</li>
+          <li>Contribution à la création et l'amélioration de sites vitrines</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="formation">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="section-tag">Historique</div>
+        <h2 class="section-title">Formation</h2>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">2023 — 2026</div>
+        <div class="tl-role">Licence DAII</div>
+        <div class="tl-org">Développement d'Applications Informatiques et Innovation — EMIT, Université de Fianarantsoa</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2023</div>
+        <div class="tl-role">Baccalauréat, Série S</div>
+        <div class="tl-org">Madagascar</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2019</div>
+        <div class="tl-role">BEPC, Option B</div>
+        <div class="tl-org">Madagascar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2 class="contact-title">Construisons <em>quelque chose</em> ensemble.</h2>
+    <div class="contact-grid">
+      <a class="contact-item" href="mailto:jocelynramalalatiana@gmail.com"><span class="label">e-mail</span> jocelynramalalatiana@gmail.com</a>
+      <a class="contact-item" href="tel:0382096303"><span class="label">tél</span> 038 20 963 03</a>
+      <a class="contact-item" href="https://linkedin.com/in/jocelyn-ramalalatiana-30b138300" target="_blank" rel="noopener"><span class="label">linkedin</span> /jocelyn-ramalalatiana</a>
+      <div class="contact-item"><span class="label">lieu</span> Fianarantsoa, Madagascar</div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Jocelyn Ramalalatiana</span>
+      <span>disponible pour stage & missions freelance</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.proj-card, .tl-item');
+  reveals.forEach(el => el.classList.add('reveal'));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.05, rootMargin: '0px 0px 200px 0px' });
+  reveals.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
